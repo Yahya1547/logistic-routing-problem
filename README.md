@@ -72,3 +72,10 @@ Thank you for Li Fei Fei et. al. for providing the data.
 
 ## Final Words
 Akhir Kata, selamat bersenang-senang ! It's not worth it if you're not having fun.
+
+## installation
+pip install PyOpenGL PyOpenGL_accelerate
+
+pip install mip
+atau
+pip install mip --user
