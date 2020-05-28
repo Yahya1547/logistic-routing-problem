@@ -10,7 +10,7 @@ def buildDataNode() :
         node = node.split(' ')
         if node[2][-1] == '\n' :
             node[2] = node[2][:-1]
-        data[node[0]] = (float(node[1]), float(node[2]))
+        data[int(node[0])] = (float(node[1]), float(node[2]))
     
     return data
 
@@ -23,33 +23,31 @@ def buildDataEdge() :
     for edge in edges :
         edge = edge.split(' ')
         
-        if edge[1] not in data : 
-            data[edge[1]] = []
-        if edge[2] not in data :
-            data[edge[2]] = []
+        if int(edge[1]) not in data : 
+            data[int(edge[1])] = []
+        if int(edge[2]) not in data :
+            data[int(edge[2])] = []
         
         if edge[3][-1] == '\n' : 
             edge[3] = edge[3][:-1]
-        data[edge[1]].append((edge[2], float(edge[3])))
+        data[int(edge[1])].append((int(edge[2]), float(edge[3])))
 
         # asumsi jalanan 2 arah
-        data[edge[2]].append((edge[1], float(edge[3])))
+        data[int(edge[2])].append((int(edge[1]), float(edge[3])))
     
     return data
 
 def buildSubgraph(listNode, dataNode, dataEdge) :
-    indeks = {}
-    for i in range(len(listNode)) : 
-        indeks[listNode[i]] = i
-
-    subgraph = [[-1 for i in range(len(listNode))] for j in range(len(listNode))]
+    subgraph = [[0 for i in range(len(listNode))] for j in range(len(listNode))]
 
     for i in range(len(listNode)) :
-        for j in range(i, len(listNode)) :
-            if i != j : 
-                subgraph[indeks[i]][indeks[j]] = dijkstra(i, j, dataNode, dataEdge)
+        for j in range(len(listNode)) :
+            if i < j : 
+                subgraph[i][j] = dijkstra(listNode[i], listNode[j], dataNode, dataEdge)
+            elif i > j :
+                subgraph[i][j] = subgraph[j][i]
     
-    return indeks, subgraph
+    return subgraph
 
 def dijkstra(src, end, dataNode, dataEdge) :
     pq = Q.PriorityQueue()
@@ -61,6 +59,7 @@ def dijkstra(src, end, dataNode, dataEdge) :
     pq.put((0, src))
     while not pq.empty() :
         u = pq.get()[1]
+
         for i in range(len(dataEdge[u])) :
             adj = dataEdge[u][i][0]
             weight = dataEdge[u][i][1]
