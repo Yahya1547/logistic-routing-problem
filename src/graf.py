@@ -38,6 +38,9 @@ def buildDataEdge() :
     return data
 
 def buildSubgraph(listNode, dataNode, dataEdge) :
+    indeks = {}
+    for i in range(len(listNode)) :
+        indeks[listNode[i]] = i
     subgraph = [[0 for i in range(len(listNode))] for j in range(len(listNode))]
 
     for i in range(len(listNode)) :
@@ -47,7 +50,7 @@ def buildSubgraph(listNode, dataNode, dataEdge) :
             elif i > j :
                 subgraph[i][j] = subgraph[j][i]
     
-    return subgraph
+    return indeks, subgraph
 
 def dijkstra(src, end, dataNode, dataEdge) :
     pq = Q.PriorityQueue()
