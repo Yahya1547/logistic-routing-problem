@@ -45,8 +45,8 @@ for (i,j) in product(v - {start}, v - {start}) :
         model += u[indeks[i]] - u[indeks[j]] + p*x[indeks[i]][indeks[j]] <= p - 1
 
 model.max_mip_gap_abs = 0.05
-status = model.optimize(max_seconds=30, relax=True, max_nodes = 100, max_solutions=1)
-
+# status = model.optimize(max_seconds=30,max_nodes = 100, max_solutions=1)
+status = model.optimize(max_seconds=30)
 print(status)
 
 print('route with total distances : ', end="")
@@ -57,27 +57,24 @@ elif status == OptimizationStatus.FEASIBLE :
 else :
     print(model.objective_bound)
 
-# for i in range(len(dest)) :
+for i in range(len(dest)) :
     
-    # print(i)
-    # print(x[indeks[start]][i].x)
-    # print(x[indeks[start]][i].xi)
-    # if x[indeks[start]][i].x >= 1 :
-    #     print("ketemu", end=" ")
-    #     node = dest[i]
-    #     print(str(start) + " - ", end="")
-    #     while node != start :
-    #         print(str(node) + " - ", end="")
+    if x[indeks[start]][i].x >= 1 :
+        print("ketemu", end=" ")
+        node = dest[i]
+        print(str(start) + " - ", end="")
+        while node != start :
+            print(str(node) + " - ", end="")
 
-    #         for j in range(len(dest)) :
-    #             if x[indeks[node]][j].x >= 0.99 :
-    #                 node = dest[j]
-    #                 break
+            for j in range(len(dest)) :
+                if x[indeks[node]][j].x >= 0.99 :
+                    node = dest[j]
+                    break
         
-    #     print(str(node))
-    #     # while node != start :
-    #     #     for j in range(len(dest)) :
-    #     #         if x[start][]
+        print(str(node))
+        # while node != start :
+        #     for j in range(len(dest)) :
+        #         if x[start][]
 
 
 
