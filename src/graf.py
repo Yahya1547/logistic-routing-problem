@@ -43,6 +43,8 @@ def buildSubgraph(listNode, dataNode, dataEdge) :
         indeks[listNode[i]] = i
     subgraph = [[0 for i in range(len(listNode))] for j in range(len(listNode))]
 
+    parent = {}
+
     for i in range(len(listNode)) :
         for j in range(len(listNode)) :
             if i < j : 
@@ -55,9 +57,12 @@ def buildSubgraph(listNode, dataNode, dataEdge) :
 def dijkstra(src, end, dataNode, dataEdge) :
     pq = Q.PriorityQueue()
     dist = {}
+    parent = {}
     for data in dataNode :
+        parent[data] = -1
         dist[data] = float('inf')
-    
+
+    parent[src] = src
     dist[src] = 0
     pq.put((0, src))
     while not pq.empty() :
@@ -68,8 +73,15 @@ def dijkstra(src, end, dataNode, dataEdge) :
             weight = dataEdge[u][i][1]
 
             if dist[adj] > dist[u] + weight :
+                parent[adj] = u
                 dist[adj] = dist[u] + weight
                 pq.put((dist[adj], adj))
+    
+    visit = end
+    route = [(parent[visit], visit)]
+    while(parent[visit] != start) :
+        visit = parent[visit]
+        route.append((parent[visit], visit))
 
     return dist[end]
 

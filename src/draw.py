@@ -3,8 +3,10 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 from graf import *
 from math import *
+from mtsp import solve
 
 dataNode = buildDataNode()
+route = solve()
 
 def scale() :
     for node in dataNode :
@@ -29,6 +31,15 @@ def map():
             glVertex2f(cosine, sine)
     glEnd()
 
+def route_line() :
+    glBegin(GL_LINES)
+    glColor3f(0, 1, 0)
+    for pair in route :
+        start, end = pair[0], pair[1]
+        glVertex2f(dataNode[start][0], dataNode[start][1])
+        glVertex2f(dataNode[end][0], dataNode[end][1])
+    glEnd()
+
 def iterate():
     glViewport(0, 0, w, h)
     glMatrixMode(GL_PROJECTION)
@@ -43,7 +54,9 @@ def showScreen():
     iterate()
     glColor3f(1.0, 0.0, 3.0)
     map()
+    route_line()
     glutSwapBuffers()
+
 
 glutInit()
 glutInitDisplayMode(GLUT_RGBA)
