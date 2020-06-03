@@ -1,5 +1,6 @@
 from mip import *
 from graf import *
+
 from itertools import product
 
 dataNode = buildDataNode()
@@ -14,10 +15,12 @@ def solve() :
 
     start = int(input("Masukkan tempat perusahaan : "))
 
-    indeks, subgraph = buildSubgraph(dest, dataNode, dataEdge)
+    listNode = split(start, dest, m, dataNode)
+    print(listNode)
+    indeks, subgraph, routes = buildSubgraph(dest, dataNode, dataEdge)
     print(subgraph)
     v = set(dest)
-
+    solution = [[] for i in range(m)]
     model = Model()
 
     x = [[model.add_var(var_type=BINARY) for j in dest] for i in dest]
@@ -64,14 +67,14 @@ def solve() :
         
         if x[indeks[start]][i].x >= 1 :
             print("ketemu", end=" ")
-            route.append((start, dest[i]))
+            route.append((start, dest[i], routes[indeks[start]][i]))
             node = dest[i]
             print(str(start) + " - ", end="")
             while node != start :
                 print(str(node) + " - ", end="")
                 for j in range(len(dest)) :
                     if x[indeks[node]][j].x >= 0.99 :
-                        route.append((node, dest[j]))
+                        route.append((node, dest[j], routes[indeks[node]][j]))
                         node = dest[j]
                         break
             
@@ -80,4 +83,6 @@ def solve() :
             #     for j in range(len(dest)) :
             #         if x[start][]
     
-    return route
+    return route, dest
+
+solve()

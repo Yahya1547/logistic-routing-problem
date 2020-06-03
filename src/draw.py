@@ -6,8 +6,8 @@ from math import *
 from mtsp import solve
 
 dataNode = buildDataNode()
-route = solve()
-
+route, dest = solve()
+print(route)
 def scale() :
     for node in dataNode :
         x = dataNode[node][0]
@@ -24,7 +24,10 @@ def map():
     radius = 1.5
     for node in dataNode :
         posx, posy = dataNode[node][0], dataNode[node][1]
-
+        if node in dest :
+            glColor3f(1.0, 0.0, 3.0)
+        else :
+            glColor3f(1, 1, 0)
         for i in range(360) :
             cosine = radius * cos(i*pi/180) + posx
             sine = radius * sin(i*pi/180) + posy
@@ -52,7 +55,6 @@ def showScreen():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
     iterate()
-    glColor3f(1.0, 0.0, 3.0)
     map()
     route_line()
     glutSwapBuffers()
