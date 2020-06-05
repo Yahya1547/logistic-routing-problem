@@ -1,8 +1,10 @@
 import queue as Q
 from math import *
 
-def buildDataNode() :
-    dataNode = open('../assets/OLcnode.txt', 'r')
+def buildDataNode(city) :
+    # Membentuk data Node pada suatu kota
+    path = "../assets/" + city + "cnode.txt"
+    dataNode = open(path, 'r')
     nodes = dataNode.readlines()
     
     data = {}
@@ -15,8 +17,10 @@ def buildDataNode() :
     
     return data
 
-def buildDataEdge() :
-    dataEdge = open('../assets/OLcedge.txt', 'r')
+def buildDataEdge(city) :
+    # Membentuk data Edge pada suatu kota
+    path = "../assets/" + city + "cedge.txt"
+    dataEdge = open(path, 'r')
     edges = dataEdge.readlines()
 
     data = {}
@@ -39,6 +43,8 @@ def buildDataEdge() :
     return data
 
 def buildSubgraph(listNode, dataNode, dataEdge) :
+    # Membentuk subgraph lengkap berdasarkan listNode yang dipilih pengguna berdasarkan dataNode dan dataEdge suatu kota
+
     indeks = {}
     for i in range(len(listNode)) :
         indeks[listNode[i]] = i
@@ -60,6 +66,8 @@ def buildSubgraph(listNode, dataNode, dataEdge) :
     return indeks, subgraph, routes
 
 def dijkstra(src, end, dataNode, dataEdge) :
+    # Algoritma dijkstra untuk melakukan pathfinding dari suatu node awal src menuju node akhir end berdasarkan dataNode dan dataEdge suatu kota
+
     pq = Q.PriorityQueue()
     dist = {}
     parent = {}
@@ -82,6 +90,7 @@ def dijkstra(src, end, dataNode, dataEdge) :
                 dist[adj] = dist[u] + weight
                 pq.put((dist[adj], adj))
     
+    # Menelusuri rute dari src menuju end
     visit = end
     route = [(parent[visit], visit)]
     while(parent[visit] != src) :
@@ -91,6 +100,7 @@ def dijkstra(src, end, dataNode, dataEdge) :
     return dist[end], route
 
 def gradien(p1, p2, dataNode) :
+    # Menghitung gradien dari titik p1 dan p2 berdasarkan koordinat titik dari dataNode suatu kota
     x1, y1 = dataNode[p1][0], dataNode[p1][1]
     x2, y2 = dataNode[p2][0], dataNode[p2][1]
 
@@ -98,10 +108,12 @@ def gradien(p1, p2, dataNode) :
     return result
 
 def split(src, listNode, m, dataNode) :
+    # Melakukan splitting dari listNode yang dipilih user untuk m salesman secara merata
     copyListNode = []
     for x in listNode :
         copyListNode.append(x)
     
+    # Eliminasi titik awal pada listNode untuk diproses
     copyListNode.remove(src)
     newList = [(gradien(src, copyListNode[i], dataNode),copyListNode[i]) for i in range(len(copyListNode))]
 
@@ -111,8 +123,8 @@ def split(src, listNode, m, dataNode) :
         div += 1
     
     newList.sort()
-    # print(div)
-    # print(newList)
+
+    # Membagi titik titik pada listNode secara merata untuk tiap kurir
     newListNode = [[] for i in range(m)]
     i = 0
     j = 0
@@ -125,15 +137,8 @@ def split(src, listNode, m, dataNode) :
             j = 0
             count += 1
     
+    # Menggabungkan kembali titik awal (perusahaan) yang dipisah di awal algoritma
     for x in newListNode :
         x.append(src)
 
     return newListNode
-
-# print(split(1,[2,3,4,5,6,7,8], 3, buildDataNode()))
-        
-
-# dataNode = buildDataNode()
-# dataEdge = buildDataEdge()
-# dijkstra(1,2, dataNode, dataEdge)
-            

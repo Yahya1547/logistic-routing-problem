@@ -138,8 +138,10 @@ def main(dest, solution_routes):
 
 
 if __name__ == '__main__' : 
-    dataNode = buildDataNode()
-    solutions, solution_routes, dest = solve()
+    city = input("Masukkan nama kota : ")
+    dataNode = buildDataNode(city)
+    dataEdge = buildDataEdge(city)
+    solutions, solution_routes, dest = solve(dataNode, dataEdge)
     scale()
     w,h= 1000,1000
     printSolutions(solutions)

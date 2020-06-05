@@ -3,10 +3,8 @@ from graf import *
 
 from itertools import product
 
-dataNode = buildDataNode()
-dataEdge = buildDataEdge()
 
-def solve() :
+def solve(dataNode, dataEdge) :
     m = int(input("Masukkan jumlah salesman : "))
     n = int(input("Masukkan jumlah kota tujuan :"))
     dest = [-1 for i in range(n)]
@@ -64,13 +62,11 @@ def solve() :
         route = []
         for i in range(len(destination)) :
             if x[indeks[start]][i].x >= 1 :
-                print("ketemu " + str(indeks[i]))
                 route.append((start, destination[i], routes[indeks[start]][i]))
                 node = destination[i]
 
-                print(str(start) + " - ", end="")
                 while node != start :
-                    print(str(node) + " - ", end = "")
+
                     for j in range(len(destination)) :
                         if x[indeks[node]][j].x >= 0.99 :
                             route.append((node, destination[j], routes[indeks[node]][j]))
