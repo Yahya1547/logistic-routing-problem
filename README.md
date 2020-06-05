@@ -59,11 +59,13 @@ Kemudian, setelah membagi wilayah untuk tiap kurir tersebut. Akan dijalankan MIP
 ## Cara Menjalankan Program
 Untuk menjalankan aplikasi ini, dari root directory project ini dapat pindah ke folder src dengan command "cd src". Kemudian, jalankan file main.py dengan command :
 ```
+cd src
 python3 main.py
 ```
 atau apabila python sudah dipastikan dalam versi python 3
 dapat menggunakan command
 ``` 
+cd src
 python main.py
 ```
 Masukkan untuk kota berupa "OL" atau "SF". OL untuk kota Oldenburg dan SF untuk San Fransisco.
