@@ -65,6 +65,22 @@ def solve() :
         for i in range(len(destination)) :
             if x[indeks[start]][i].x >= 1 :
                 print("ketemu " + str(indeks[i]))
+                route.append((start, destination[i], routes[indeks[start]][i]))
+                node = destination[i]
+
+                print(str(start) + " - ", end="")
+                while node != start :
+                    print(str(node) + " - ", end = "")
+                    for j in range(len(destination)) :
+                        if x[indeks[node]][j].x >= 0.99 :
+                            route.append((node, destination[j], routes[indeks[node]][j]))
+                            node = destination[j]
+                            break
+        
+                break
+        solution_routes[k] = route
+
+    return solutions, solution_routes, dest
 
     # route = []
 
@@ -83,10 +99,6 @@ def solve() :
     #                     node = dest[j]
     #                     break
             
-    #         print(str(node))
-    #         # while node != start :
-    #         #     for j in range(len(dest)) :
-    #         #         if x[start][]
     
     # return route, dest
 
