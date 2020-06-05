@@ -70,11 +70,11 @@ Silahkan gunakan referensi berikut sebagai awal pengerjaan tugas:<br>
 ## Credits
 Thank you for Li Fei Fei et. al. for providing the data.
 
-## Final Words
-Akhir Kata, selamat bersenang-senang ! It's not worth it if you're not having fun.
 
 ## installation
 pip install PyOpenGL PyOpenGL_accelerate
+sudo apt-get install freeglut3-dev
+pip3 install pygame
 
 pip install mip
 atau
