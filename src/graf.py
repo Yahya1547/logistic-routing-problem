@@ -11,7 +11,7 @@ def buildDataNode() :
         node = node.split(' ')
         if node[2][-1] == '\n' :
             node[2] = node[2][:-1]
-        data[int(node[0])] = (float(node[1]), float(node[2]))
+        data[int(node[0])] = (float(node[1]), float(node[2]), 0)
     
     return data
 
